@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLC Alert Dashboard</title>
+    <style>
+        body { margin: 0; background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; font-family: -apple-system, sans-serif; padding: 20px; }
+        .card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 25px; padding: 20px; margin-bottom: 20px; }
+        .btn-add { display: block; width: 100%; padding: 15px; background: #e94560; border: none; border-radius: 15px; color: white; font-weight: bold; cursor: pointer; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+        .modal-content { background: #16213e; padding: 20px; border-radius: 20px; width: 80%; }
+    </style>
+</head>
+<body>
+
+    <h1>Prosinec 2025</h1>
+    <div class="card" id="mission-card">
+        <h2>Aktuální cesta</h2>
+        <p id="mission-text">Žádná aktivní mise.</p>
+    </div>
+
+    <button class="btn-add" onclick="document.getElementById('modal').style.display='flex'">Přidat nové dobrodružství +</button>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3>Nové pozorování</h3>
+            <input type="text" id="location-input" placeholder="Lokalita..." style="width:100%; padding:10px; margin-bottom:10px; border-radius:10px; box-sizing:border-box;">
+            <button class="btn-add" onclick="saveMission()">Uložit</button>
+        </div>
+    </div>
+
+    <script>
+        function saveMission() {
+            const loc = document.getElementById('location-input').value;
+            if(loc) {
+                document.getElementById('mission-text').innerText = "Cíl: " + loc;
+                localStorage.setItem('userMission', loc);
+                document.getElementById('modal').style.display = 'none';
+            }
+        }
+        // Načtení při startu
+        window.onload = () => {
+            const saved = localStorage.getItem('userMission');
+            if(saved) document.getElementById('mission-text').innerText = "Cíl: " + saved;
+        }
+    </script>
+</body>
+</html>
